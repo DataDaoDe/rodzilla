@@ -1,6 +1,6 @@
 module Rodzilla
   module Bugzilla
-    class Version
+    class Version < Base
       attr_accessor :version
     end
   end

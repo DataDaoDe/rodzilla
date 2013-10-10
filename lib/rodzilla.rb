@@ -9,7 +9,7 @@ module Rodzilla
     attr_accessor :base_url, :username, :password, :format 
 
     def initialize(base_url, username, password)
-      @base_url = File.join(@base_url, "#{@format}rpc.cgi")
+      @base_url = base_url
       @username = username
       @password = password
       @format   = :json

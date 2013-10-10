@@ -31,6 +31,10 @@ module Rodzilla
       bugzilla_resource('Bugzilla')
     end
 
+    def classifications
+      bugzilla_resource('Classification')
+    end
+
 
   end
 end

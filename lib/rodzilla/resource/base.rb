@@ -11,7 +11,7 @@ module Rodzilla
         @format   = format
       end
 
-      def self.prepare_request(params)
+      def self.prepare_request(params={})
         @request_url  = self.class.build_url
         @params       = self.class.build_params(params)
       end

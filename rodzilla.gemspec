@@ -5,7 +5,7 @@ require 'rodzilla/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "rodzilla"
-  spec.version       = Rodzilla::VERSION
+  spec.version       = Rodzilla::VERSION::STRING
   spec.authors       = ["John Faucett"]
   spec.email         = ["jwaterfaucett@gmail.com"]
   spec.description   = %q{A Bugzilla ReST API Client}

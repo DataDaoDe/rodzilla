@@ -1,3 +1,9 @@
 module Rodzilla
-  VERSION = "0.0.1"
+  module VERSION
+    MAJOR   = 0
+    MINOR   = 1
+    PATCH   = 0
+
+    STRING = [MAJOR,MINOR,PATCH].join('.')
+  end
 end

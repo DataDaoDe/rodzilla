@@ -27,8 +27,8 @@ Or install it yourself as:
 # get the Bugzilla list of available projects
 require "rodzilla"
 service = Rodzilla::WebService.new("https://example.com", "username", "password")
-product_ids = s.products.get_accessible_products
-service.products.get_products(product_ids) # OpenStruct.products -> Array of all products with names and extra info
+product_ids = service.products.get_accessible_products
+service.products.get_products(product_ids) # OpenStruct.products -> "Array of all products with names and extra info"
 
 # Find out specific information about required bug fields
 service.bugs.fields
@@ -52,7 +52,6 @@ service.bugs.create!( product: 'Demo Product',
   severity: 'minor',
   version: 'unspecified'
 ) # => { "id" => 9832 }
-
 ````
 
 ## Contributing

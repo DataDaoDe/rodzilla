@@ -9,6 +9,7 @@ require "rodzilla/resource/base"
 require "rodzilla/resource/product"
 require "rodzilla/resource/classification"
 require "rodzilla/resource/bugzilla"
+require "rodzilla/resource/bug"
 
 module Rodzilla
   class WebService
@@ -37,6 +38,10 @@ module Rodzilla
 
     def classifications
       bugzilla_resource('Classification')
+    end
+
+    def bugs
+      bugzilla_resource('Bug')
     end
 
 

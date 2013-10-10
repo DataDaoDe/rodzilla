@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jwaterfaucett@gmail.com"]
   spec.description   = %q{A Bugzilla ReST API Client}
   spec.summary       = %q{Bugzilla API Client}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/jwaterfaucett/rodzilla"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

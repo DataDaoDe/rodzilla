@@ -1,6 +1,7 @@
 require 'test_helper'
 
 describe Rodzilla::WebService do
+  
   it "products should return ::Resource::Product class" do
     @service = Rodzilla::WebService.new('http://example.io', 'asdf', 'asdf')
     @service.products.must_be_kind_of(Rodzilla::Resource::Product)

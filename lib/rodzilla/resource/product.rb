@@ -11,7 +11,7 @@ module Rodzilla
       end
 
       def get_accessible_products
-        prepare_request
+        self.class.prepare_request
         @response = self.class.get(@request_url, @params)
         puts @response.inspect
       end

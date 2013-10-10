@@ -1,6 +1,11 @@
 # Rodzilla
 
-TODO: Write a gem description
+This Ruby Gem tries its best to implement: [http://www.bugzilla.org/docs/tip/en/html/api/index.html](The Bugzilla API)
+
+It only supports JSON and implements json-rpc
+The JSON-RPC specification: [http://json-rpc.org/wiki/specification](JSON-RPC Specification)
+
+Currently the Bugzilla REST API is experimental and not reliable, so this is not a REST API.
 
 ## Installation
 
@@ -18,7 +23,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+````ruby
+# get the Bugzilla list of available projects
+require "rodzilla"
+s = Rodzilla::WebService.new("https://example.com", "username", "password")
+product_ids = s.products.get_accessible_products
+s.products.get_products(product_ids) # OpenStruct.products -> Array of all products with names and extra info
+
+# Find out specific information about required bug fields
+s.bugs.fields
+
+# There is also an alternative method for rpc resources objects
+bug = Rodzilla::Resource::Bug.new("https://example.com", "username", "password", :json )
+bug.fields
+
+# TODO: Implement creation
+
+````
 
 ## Contributing
 

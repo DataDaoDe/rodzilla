@@ -40,7 +40,7 @@ module Rodzilla
       # Raises an exception if a required field is not provided
       def create!(params={})
         REQUIRED_FIELDS.each { |field| raise ArgumentError, "Error: #{field} is required" unless params[field] }
-        rpc_call( params )
+        rpc_call( params.merge(rpc_method: 'create' ) )
       end
 
     end

@@ -56,7 +56,7 @@ module Rodzilla
           if err = res["error"]
             raise JsonRpcResponseError, "Error (#{err['code']}: #{err['message']}"
           end
-          @result = res["result"]
+          @result = OpenStruct.new(res["result"])
         rescue => ex
           raise ex
         end

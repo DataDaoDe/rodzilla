@@ -1,5 +1,6 @@
 require "httparty"
 require "json"
+require "ostruct"
 require "rodzilla/version"
 require "rodzilla/resource/base"
 require "rodzilla/resource/product"

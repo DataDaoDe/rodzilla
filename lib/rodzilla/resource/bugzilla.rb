@@ -18,11 +18,6 @@ module Rodzilla
         rpc_call( rpc_method: 'extensions' )
       end
 
-
-      def create
-
-      end
-
     end
   end
 end

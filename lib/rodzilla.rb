@@ -1,7 +1,9 @@
 require "httparty"
+require "json"
 require "rodzilla/version"
 require "rodzilla/resource/base"
 require "rodzilla/resource/product"
+require "rodzilla/resource/bugzilla"
 
 module Rodzilla
   class WebService
@@ -22,6 +24,10 @@ module Rodzilla
 
     def products
       bugzilla_resource('Product')
+    end
+
+    def bugzilla
+      bugzilla_resource('Bugzilla')
     end
 
 

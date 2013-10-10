@@ -45,12 +45,12 @@ module Rodzilla
 
       def rpc_call(params={})
         prepare_request( params )
-        self.class.post(@request_url, body: @params, headers: @headers )
-        parse_rpc_response!
+        @response = self.class.post(@request_url, body: JSON.dump(@params), headers: @headers )
+        #parse_rpc_response!
       end
 
       def parse_rpc_response!
-        puts @request.response.inspect
+        
       end
 
     end

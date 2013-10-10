@@ -17,51 +17,55 @@ module Rodzilla
         @headers = { "Content-Type" => 'application/json-rpc' }
       end
 
-      def prepare_request(params={})
-        @request_url  = build_url
-        @params       = build_params(params)
-      end
+      
 
-      def build_url
-        File.join("#{@base_url}", "#{@format}rpc.cgi")
-      end
-
-      def build_params(params={})
-        rpc_method = params.delete(:rpc_method)
-        { params: [@credentials.merge(params)], method: "#{self.class.demodulize(self.class)}.#{rpc_method}", id: make_id }
-      end
-
-      def self.demodulize(path)
-        path = path.to_s
-        if i = path.rindex('::')
-          path[(i+2)..-1]
-        else
-          path
+      protected
+      
+        def prepare_request(params={})
+          @request_url  = build_url
+          @params       = build_params(params)
         end
-      end
 
-      def make_id
-        @@_request_id += 1
-      end
+        def build_url
+          File.join("#{@base_url}", "#{@format}rpc.cgi")
+        end
 
-      def rpc_call(params={})
-        prepare_request( params )
-        @response = self.class.post(@request_url, body: JSON.dump(@params), headers: @headers )
-        parse_rpc_response!
-      end
+        def build_params(params={})
+          rpc_method = params.delete(:rpc_method)
+          { params: [@credentials.merge(params)], method: "#{self.class.demodulize(self.class)}.#{rpc_method}", id: make_id }
+        end
 
-      def parse_rpc_response!
-        begin
-          res = @response.parsed_response
-          if err = res["error"]
-            raise Rodzilla::JsonRpcResponseError, "Error (#{err['code']}): #{err['message']}"
+        def self.demodulize(path)
+          path = path.to_s
+          if i = path.rindex('::')
+            path[(i+2)..-1]
+          else
+            path
           end
-          @result = OpenStruct.new(res["result"])
-        rescue => ex
-          raise ex
         end
-        @result
-      end
+
+        def make_id
+          @@_request_id += 1
+        end
+
+        def rpc_call(params={})
+          prepare_request( params )
+          @response = self.class.post(@request_url, body: JSON.dump(@params), headers: @headers )
+          parse_rpc_response!
+        end
+
+        def parse_rpc_response!
+          begin
+            res = @response.parsed_response
+            if err = res["error"]
+              raise Rodzilla::JsonRpcResponseError, "Error (#{err['code']}): #{err['message']}"
+            end
+            @result = res["result"]
+          rescue => ex
+            raise ex
+          end
+          @result
+        end
 
     end
   end

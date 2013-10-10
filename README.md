@@ -37,7 +37,7 @@ s.bugs.fields
 bug = Rodzilla::Resource::Bug.new("https://example.com", "username", "password", :json )
 bug.fields
 
-# TODO: Implement creation
+# TODO: Implement Resource creation
 
 ````
 

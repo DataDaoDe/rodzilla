@@ -17,6 +17,9 @@ module Rodzilla
         rpc_call( rpc_method: "get_accessible_products" )
       end
 
+      def get_products(ids)
+        rpc_call( rpc_method: "get", ids: ids )
+      end
     end
   end
 end

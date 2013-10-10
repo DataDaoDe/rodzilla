@@ -37,6 +37,10 @@ s.bugs.fields
 bug = Rodzilla::Resource::Bug.new("https://example.com", "username", "password", :json )
 bug.fields
 
+# Searching is also easy
+# for more info see: http://www.bugzilla.org/docs/tip/en/html/api/Bugzilla/WebService/Bug.html#search
+bug.search( product: [ 'Test-Product' ] )
+
 # TODO: Implement Resource creation
 
 ````

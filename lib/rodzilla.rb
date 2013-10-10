@@ -2,8 +2,11 @@ require "httparty"
 require "json"
 require "ostruct"
 require "rodzilla/version"
+
+# load resources
 require "rodzilla/resource/base"
 require "rodzilla/resource/product"
+require "rodzilla/resource/classification"
 require "rodzilla/resource/bugzilla"
 
 module Rodzilla

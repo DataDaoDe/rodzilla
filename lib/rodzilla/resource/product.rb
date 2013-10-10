@@ -11,9 +11,7 @@ module Rodzilla
       end
 
       def get_accessible_products
-        self.class.prepare_request
-        @response = self.class.get(@request_url, @params)
-        puts @response.inspect
+        rpc_call( rpc_method: "get_accessible_products" )
       end
 
       def create

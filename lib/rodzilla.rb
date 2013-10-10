@@ -18,7 +18,7 @@ module Rodzilla
     end
 
     def bugzilla_resource(resource)
-      raise Rodzilla::ResourceNotFound, "Error: #{resource} not found." unless Rodzilla::Resource.constants.include?(resource.to_sym)
+      raise Rodzilla::ResourceNotFoundError, "Error: #{resource} not found." unless Rodzilla::Resource.constants.include?(resource.to_sym)
       klass = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
     end
 

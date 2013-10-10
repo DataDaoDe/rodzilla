@@ -1,3 +1,4 @@
 module Rodzilla
-  class ResourceNotFound < StandardError; ;end
+  class ResourceNotFoundError < StandardError; ;end
+  class JsonRpcResponseError < StandardError; ;end
 end

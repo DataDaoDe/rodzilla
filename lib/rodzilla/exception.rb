@@ -1,3 +1,3 @@
 module Rodzilla
-  class ResourceNotSupportedError < StandardError; ;end
+  class ResourceNotFound < StandardError; ;end
 end

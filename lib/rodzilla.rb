@@ -1,13 +1,12 @@
 require "httparty"
 require "rodzilla/version"
-require "rodzilla/bugzilla/version"
+require "rodzilla/resource/base"
+require "rodzilla/resource/product"
 
 module Rodzilla
-  class Client
-    include HTTParty
+  class WebService
 
-    attr_accessor :base_url, :username, :password,
-                  :request_url, :format 
+    attr_accessor :base_url, :username, :password, :format 
 
     def initialize(base_url, username, password)
       @base_url = File.join(@base_url, "#{@format}rpc.cgi")
@@ -16,27 +15,15 @@ module Rodzilla
       @format   = :json
     end
 
-    def call_bugzilla_method(method)
-
+    def bugzilla_resource(resource)
+      raise Rodzilla::ResourceNotFound, "Error: #{resource} not found." unless Rodzilla::Resource.constants.include?(resource.to_sym)
+      klass = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
     end
 
-    def bugs; resource(:Bug); end
-
-    def bugzilla; resource(:Bugzilla); end
-
-    def classifications; resource(:Classification); end
-
-    def groups; resource(:Group); end
-
-    def products; resource(:Product); end
-
-    def users; resource(:User); end
-
-    def resource(name)
-      unless Rodzilla.constants.include?(name)
-        raise Rodzilla::ResourceNotSupportedError, "Error: Resource not supported"
-      end
-      name.to_s.classify
+    def products
+      bugzilla_resource('Product')
     end
+
+
   end
 end

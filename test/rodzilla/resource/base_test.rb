@@ -32,6 +32,9 @@ describe Rodzilla::Resource::Base do
     it { @base.must_respond_to('credentials') }
     it { @base.must_respond_to('credentials=') }
 
+    it { @base.must_respond_to('headers') }
+    it { @base.must_respond_to('headers=') }
+
     describe "class methods" do
       it { Rodzilla::Resource::Base.must_respond_to(:demodulize) }
     end

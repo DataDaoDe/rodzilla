@@ -3,7 +3,8 @@ module Rodzilla
     class Base
       @@_request_id = 1
       include HTTParty
-      attr_accessor :base_url, :username, :password, :format , :request_url, :response, :result, :credentials
+      attr_accessor :base_url, :username, :password, :format, 
+                    :request_url, :response, :result, :credentials
       
       def initialize(base_url, username, password, format=:json)
         @base_url = base_url

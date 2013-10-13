@@ -5,7 +5,7 @@ module Rodzilla
       include HTTParty
       attr_accessor :base_url, :username, :password, :format , :request_url, :response, :result, :credentials
       
-      def initialize(base_url, username, password, format)
+      def initialize(base_url, username, password, format=:json)
         @base_url = base_url
         @username = username
         @password = password

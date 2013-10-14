@@ -6,8 +6,7 @@ task default: :test
 
 desc 'Test the rodzilla client.'
 Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
+  t.libs << 'lib' << 'test'
+  t.test_files = FileList['test/**/*_test.rb']
   t.verbose = true
 end

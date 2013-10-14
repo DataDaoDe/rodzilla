@@ -21,6 +21,10 @@ Or install it yourself as:
 
     $ gem install rodzilla
 
+## Architecture
+Rodzilla never sets any class variables for the Bugzilla Host URL (unlike activeresource), mainly because doing this allows you to
+instantiate as many objects as you want and have them all access different Bugzilla Services in the same process without collision problems.
+
 ## Usage
 
 ````ruby
@@ -28,7 +32,7 @@ Or install it yourself as:
 require "rodzilla"
 service = Rodzilla::WebService.new("https://example.com", "username", "password")
 product_ids = service.products.get_accessible_products
-service.products.get_products(product_ids) # OpenStruct.products -> "Array of all products with names and extra info"
+service.products.get_products(product_ids) # Array of all products with names and extra info
 
 # Find out specific information about required bug fields
 service.bugs.fields

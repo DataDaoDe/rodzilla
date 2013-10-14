@@ -3,8 +3,8 @@ module Rodzilla
     class Bug < Base
       REQUIRED_FIELDS = [:product, :component, :summary, :version, :description, :op_sys, :platform, :priority, :severity]
 
-      def fields
-        rpc_call( rpc_method: "fields" )
+      def fields(params={})
+        rpc_call( params.merge(rpc_method: "fields"))
       end
 
       # Unless otherwise specified in the description of a parameter,

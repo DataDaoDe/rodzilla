@@ -13,6 +13,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/jwaterfaucett/rodzilla"
   spec.license       = "MIT"
 
+  spec.signing_key   = '/Users/john/.gemcert/gem-private_key.pem'
+  spec.cert_chain    = ['gem-public_cert.pem']
+
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})

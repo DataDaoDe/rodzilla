@@ -7,6 +7,11 @@ module Rodzilla
         rpc_call( params.merge(rpc_method: "fields"))
       end
 
+      # Returns all comments associated with a Bug
+      def comments(params={})
+        raise ArgumentError, "Error: comments requires that bug_id be set" unless params[:ids]
+      end
+
       # Unless otherwise specified in the description of a parameter,
       # bugs are returned if they match exactly the criteria you specify in these parameters.
       # That is, we don't match against substrings--if a bug is in the "Widgets" product and you ask for bugs in the "Widg" product, you won't get anything.

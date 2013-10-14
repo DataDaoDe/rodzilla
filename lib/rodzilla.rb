@@ -15,6 +15,10 @@ module Rodzilla
 
     attr_accessor :base_url, :username, :password, :format 
 
+    # @param base_url [String]  the bugzilla full url
+    # @param username [String]  the bugzilla authorized users username
+    # @param password [String]  the bugzilla authorized users password
+    # @param format   [Symbol]  the request/response format `:xml` or `:json`
     def initialize(base_url, username, password, format=:json)
       @base_url = base_url
       @username = username

@@ -17,8 +17,8 @@ module Rodzilla
         rpc_call( rpc_method: "get_accessible_products" )
       end
 
-      def get_products(ids)
-        rpc_call( rpc_method: "get", ids: ids )
+      def get_products(options={})
+        rpc_call( options.merge( rpc_method: 'get' ) )
       end
     end
   end

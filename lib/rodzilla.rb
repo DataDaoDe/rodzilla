@@ -1,53 +1,20 @@
 require "httparty"
 require "json"
-require "rodzilla/version"
-require "rodzilla/exception"
-
-# load resources
-require "rodzilla/resource/base"
-require "rodzilla/resource/product"
-require "rodzilla/resource/classification"
-require "rodzilla/resource/bugzilla"
-require "rodzilla/resource/bug"
 
 module Rodzilla
-  class WebService
+  
+  autoload :VERSION, 'rodzilla/version'
+  autoload :Error, 'rodzilla/error'
+  autoload :WebService, 'rodzilla/web_service'
 
-    attr_accessor :base_url, :username, :password, :format 
-
-    # @param base_url [String]  the bugzilla full url
-    # @param username [String]  the bugzilla authorized users username
-    # @param password [String]  the bugzilla authorized users password
-    # @param format   [Symbol]  the request/response format `:xml` or `:json`
-    def initialize(base_url, username, password, format=:json)
-      @base_url = base_url
-      @username = username
-      @password = password
-      @format   = format
-    end
-
-    def products
-      bugzilla_resource('Product')
-    end
-
-    def bugzilla
-      bugzilla_resource('Bugzilla')
-    end
-
-    def classifications
-      bugzilla_resource('Classification')
-    end
-
-    def bugs
-      bugzilla_resource('Bug')
-    end
-
-    protected
-      def bugzilla_resource(resource)
-        raise Rodzilla::ResourceNotFoundError, "Error: #{resource} not found." unless Rodzilla::Resource.constants.include?(resource.to_sym)
-        klass = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
-      end
-
-
+  module Resource
+    autoload :Base,   'rodzilla/resource/base'
+    autoload :Bug,    'rodzilla/resource/bug'
+    autoload :Bugzilla, 'rodzilla/resource/bugzilla'
+    autoload :Classification, 'rodzilla/resource/classification'
+    autoload :Group, 'rodzilla/resource/group'
+    autoload :Product, 'rodzilla/resource/product'
+    autoload :User, 'rodzilla/resource/user'
   end
+
 end

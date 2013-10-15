@@ -59,7 +59,7 @@ module Rodzilla
           begin
             res = @response.parsed_response
             if err = res["error"]
-              raise Rodzilla::JsonRpcResponseError, "Error (#{err['code']}): #{err['message']}"
+              raise Rodzilla::Error::JsonRpcResponseError, "Error (#{err['code']}): #{err['message']}"
             end
             @result = res["result"]
           rescue => ex

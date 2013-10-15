@@ -6,10 +6,6 @@ describe Rodzilla::WebService do
     @service = Rodzilla::WebService.new('http://example.io', 'asdf', 'asdf')
   end
 
-  after do
-    @service
-  end
-
   describe "Constructor" do
     it "should accept 4 parameters: base_url, username, password, and format" do
       s = Rodzilla::WebService.new('http://example.io', 'uname', 'passwd', :json)

@@ -6,11 +6,11 @@ module Rodzilla
       attr_accessor :base_url, :username, :password, :format, 
                     :request_url, :response, :result, :credentials, :headers
       
-      def initialize(base_url, username, password, format=:json)
+      def initialize(base_url, username, password)
         @base_url = base_url
         @username = username
         @password = password
-        @format   = format
+        @format   = :json
         @credentials = {
           Bugzilla_login: @username,
           Bugzilla_password: @password

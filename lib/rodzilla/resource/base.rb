@@ -33,16 +33,7 @@ module Rodzilla
 
         def build_params(params={})
           rpc_method = params.delete(:rpc_method)
-          { params: [@credentials.merge(params)], method: "#{self.class.demodulize(self.class)}.#{rpc_method}", id: make_id }
-        end
-
-        def self.demodulize(path)
-          path = path.to_s
-          if i = path.rindex('::')
-            path[(i+2)..-1]
-          else
-            path
-          end
+          { params: [@credentials.merge(params)], method: "#{Rodzilla::Util.demodulize(self.class)}.#{rpc_method}", id: make_id }
         end
 
         def make_id

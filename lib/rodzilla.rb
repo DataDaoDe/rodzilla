@@ -4,6 +4,7 @@ require "json"
 module Rodzilla
   
   autoload :VERSION, 'rodzilla/version'
+  autoload :Util, 'rodzilla/util'
   autoload :Error, 'rodzilla/error'
   autoload :WebService, 'rodzilla/web_service'
 

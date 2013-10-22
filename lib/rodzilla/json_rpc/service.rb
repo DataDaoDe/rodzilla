@@ -44,7 +44,7 @@ module Rodzilla
       end
 
       def get_request
-        @http_response = self.class.post(@url, body: json_rpc_request.serialize )
+        @http_response = self.class.post(@url, body: json_rpc_request.serialize, headers: json_rpc_request.headers )
       end
 
 

@@ -44,7 +44,7 @@ module Rodzilla
       private
 
         def setup_request
-          json_rpc_request = Rodzilla::JsonRpc::Request.new do |request|
+          @json_rpc_request = Rodzilla::JsonRpc::Request.new do |request|
             request.headers = { 'Content-Type' => 'application/json-rpc' }
             request.id = generate_cycle_id
           end

@@ -12,8 +12,29 @@ describe Rodzilla::JsonRpc::Service do
     @service.class.ancestors.must_include(HTTParty)
   end
 
-  it "generate_cycle_id should return 1" do
-    @service.send(:generate_cycle_id).must_equal(1)
+  describe "cycle_id checks" do
+    
+    it "generate_cycle_id should return 1" do
+      @service.send(:generate_cycle_id).must_equal(1)
+    end
+
+    it "check_cycle_id should return false if request.id is not equal to response.id" do
+      s = new_service
+      s.send(:setup_request)
+      s.rpc_request.id = 5
+      s.rpc_response = Rodzilla::JsonRpc::Response.new
+      s.rpc_response.id = 4
+      s.send(:check_cycle_id).must_equal(false)
+    end
+
+    it "check_cycle_id should return true if request.id and response.id are equal" do
+      s = new_service
+      s.send(:setup_request)
+      s.rpc_request.id = 3
+      s.rpc_response = Rodzilla::JsonRpc::Response.new
+      s.rpc_response.id = 3
+      s.send(:check_cycle_id).must_equal(true)
+    end
   end
 
 

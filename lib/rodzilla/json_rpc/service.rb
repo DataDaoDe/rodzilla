@@ -36,14 +36,14 @@ module Rodzilla
         @http_response = self.class.post( @url, body: rpc_request.serialize, headers: rpc_request.headers )
         parse_http_response
         raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
-        rpc_response
+        @rpc_response
       end
 
       def get_request
         @http_response = self.class.post(@url, body: rpc_request.serialize, headers: rpc_request.headers )
         parse_http_response
         raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
-        rpc_response
+        @rpc_response
       end
 
 
@@ -77,12 +77,12 @@ module Rodzilla
 
         def parse_http_response
           begin
-            rpc_response = Rodzilla::JsonRpc::Response.new
-            rpc_response.read_http_response(@http_response)
+            @rpc_response = Rodzilla::JsonRpc::Response.new
+            @rpc_response.read_http_response(@http_response)
           rescue => ex
             raise ex
           end
-          rpc_response
+          @rpc_response
         end
 
     end

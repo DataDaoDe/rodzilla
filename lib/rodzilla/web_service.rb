@@ -1,7 +1,7 @@
 module Rodzilla
   class WebService
 
-    attr_accessor :base_url, :username, :password, :format
+    attr_accessor :base_url, :username, :password, :format, :service
 
     # base_url - The String full uri of the Bugzilla api server
     # username - The String containing the bugzilla authorized users username
@@ -58,7 +58,7 @@ module Rodzilla
 
     def bugzilla_resource(resource)
       raise Rodzilla::Error::ResourceNotFoundError, "Error: Rodzilla::Resource::#{resource} does not exist." unless Rodzilla::Resource.constants.include?(resource.to_sym)
-      klass = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
+      @service = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
     end
 
     protected :bugzilla_resource

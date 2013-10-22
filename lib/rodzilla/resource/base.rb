@@ -22,7 +22,7 @@ module Rodzilla
           case @format
           when :json
             @endpoint_url = set_endpoint_url(:json)
-            @service  = Rodzilla::JsonRpc::Service.new(endpoint_url, @username, @password)
+            @service  = Rodzilla::JsonRpc::Service.new(@endpoint_url, @username, @password)
           end
         end
 

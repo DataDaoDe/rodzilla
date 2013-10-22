@@ -16,6 +16,7 @@ module Rodzilla
           Bugzilla_login: @username,
           Bugzilla_password: @password
         }
+        setup_request
       end
 
       def send_request!(rpc_method, params={}, http_method=:post)

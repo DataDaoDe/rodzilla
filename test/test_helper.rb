@@ -26,14 +26,14 @@ class StubSettings
 
   JSON_URL = URL + '/jsonrpc.cgi'
   JSON_HEADERS = {
-    "Server"            =>  "Apache/2.2.22 (Debian)",
-    "X-xss-protection"  =>  "1; mode=block",
-    "X-frame-options"   => "SAMEORIGIN",
-    "X-content-type-options" => "nosniff", 
-    "Keep-Alive" => "timeout=5, max=100",
-    "Connection" => "Keep-Alive",
-    "Transfer-Encoding" => "chunked",
-    "Content-Type" => "application/json; charset=UTF-8"
+    "Server"                  =>  "Apache/2.2.22 (Debian)",
+    "X-xss-protection"        =>  "1; mode=block",
+    "X-frame-options"         => "SAMEORIGIN",
+    "X-content-type-options"  => "nosniff", 
+    "Keep-Alive"              => "timeout=5, max=100",
+    "Connection"              => "Keep-Alive",
+    "Transfer-Encoding"       => "chunked",
+    "Content-Type"            => "application/json; charset=UTF-8"
   }
 
 end

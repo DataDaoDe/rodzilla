@@ -6,19 +6,19 @@ module Rodzilla
 
       # Returns a list of the ids of the products the user can search on.
       def get_selectable_products
-        rpc_call( rpc_method: "get_selectable_products" )
+        rpc_call 'Product.get_selectable_products'
       end
 
       def get_enterable_products
-        rpc_call( rpc_method: "get_enterable_products" )
+        rpc_call 'Product.get_selectable_products'
       end
 
       def get_accessible_products
-        rpc_call( rpc_method: "get_accessible_products" )
+        rpc_call 'get_accessible_products'
       end
 
       def get_products(params={})
-        rpc_call( params.merge( rpc_method: 'get' ) )
+        rpc_call 'get', params
       end
     end
   end

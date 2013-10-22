@@ -5,11 +5,11 @@ module Rodzilla
 
       
       def read_http_response(http_response)
-        http_response.parsed_response.tap do |body|
-          id     = body["id"]
-          error  = body["error"]
-          result = body["result"]
-        end
+        body = http_response.parsed_response
+        @id     = body["id"]
+        @error  = body["error"]
+        @result = body["result"]
+        self
       end
       
     end

@@ -29,20 +29,19 @@ module Rodzilla
         else
           raise Rodzilla::JsonRpc::Error::UnsupportedHttpMethod, "Error: Only GET and POST request are supported HTTP methods."
         end
-
       end
 
       def post_request
         @http_response = self.class.post( @url, body: rpc_request.serialize, headers: rpc_request.headers )
         parse_http_response
-        raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
+        raise Rodzilla::JsonRpc::Error::InvalidResponseId unless check_cycle_id
         @rpc_response
       end
 
       def get_request
         @http_response = self.class.post(@url, body: rpc_request.serialize, headers: rpc_request.headers )
         parse_http_response
-        raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
+        raise Rodzilla::JsonRpc::Error::InvalidResponseId unless check_cycle_id
         @rpc_response
       end
 

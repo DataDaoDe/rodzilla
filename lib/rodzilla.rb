@@ -9,6 +9,7 @@ module Rodzilla
   autoload :WebService, 'rodzilla/web_service'
 
   module JsonRpc
+    autoload :Error, 'rodzilla/json_rpc/error'
     autoload :Service, 'rodzilla/json_rpc/service'
     autoload :Request, 'rodzilla/json_rpc/request'
     autoload :Response, 'rodzilla/json_rpc/response'

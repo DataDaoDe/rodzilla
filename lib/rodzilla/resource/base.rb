@@ -1,22 +1,17 @@
 module Rodzilla
   module Resource
     class Base
-      attr_accessor :base_url, :username, :password, :credentials, :headers, :service
+      attr_accessor :base_url, :username, :password, :service
       
       def initialize(base_url, username, password)
         @base_url = base_url
         @username = username
         @password = password
-        @credentials = {
-          Bugzilla_login: @username,
-          Bugzilla_password: @password
-        }
-        @headers = { "Content-Type" => 'application/json-rpc' }
         @service = Rodzilla::JsonRpc::Service.new(@base_url, @username, @password)
       end
 
-      def rpc_call(rpc_name=nil, params={}, http_method=:post)
-        service.send_request!(rpc_name, params, http_method)
+      def rpc_call(rpc_method=nil, params={}, http_method=:post)
+        service.send_request!(rpc_method, params, http_method)
       end
 
       

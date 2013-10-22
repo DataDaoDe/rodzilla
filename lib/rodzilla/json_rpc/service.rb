@@ -5,19 +5,26 @@ module Rodzilla
       include HTTParty
 
       attr_accessor :json_rpc_request, :json_rpc_response,
-                    :username, :password, :url
+                    :username, :password, :credentials, :url
 
       def initialize(url, username, password)
         @url = url
         @username = username
         @password = password
+        @credentials = {
+          Bugzilla_login: @username,
+          Bugzilla_password: @password
+        }
+
         setup_request
       end
 
       def send_request!(rpc_method, params={}, http_method=:post)
 
         json_rpc_request.method = rpc_method
-        json_rpc_request.params = params
+
+        # always merge in params so we keep the credentials
+        json_rpc_request.params = json_rpc_request.params.merge(params)
 
         case http_method.to_s.downcase
         when 'post'
@@ -31,7 +38,7 @@ module Rodzilla
       end
 
       def post_request
-        @http_response = self.class.post(@url, body: json_rpc_request.serialize, headers: json_rpc_request.headers )
+        @http_response = self.class.post( @url, body: json_rpc_request.serialize, headers: json_rpc_request.headers )
         parse_http_response
         raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
       end
@@ -43,9 +50,17 @@ module Rodzilla
 
       private
 
+        # Sets the Content-Type to application/json-rpc for the Service
+        # also adds Bugzilla defined login/password to the request parameters
+        # 
+        # sets id for the request which is later checked using check_cycle_id
+        # 
+        # Return 
         def setup_request
+          user_auth = @credentials
           @json_rpc_request = Rodzilla::JsonRpc::Request.new do |request|
             request.headers = { 'Content-Type' => 'application/json-rpc' }
+            request.params = user_auth
             request.id = generate_cycle_id
           end
         end
@@ -59,7 +74,8 @@ module Rodzilla
 
         def parse_http_response
           begin
-            json_rpc_response = Rodzilla::JsonRpc::Response.new(@http_response.parsed_response)
+            json_rpc_response = Rodzilla::JsonRpc::Response.new
+            json_rpc_response.read_http_response(@http_response)
           rescue => ex
             raise ex
           end

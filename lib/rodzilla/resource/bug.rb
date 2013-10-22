@@ -4,7 +4,7 @@ module Rodzilla
       REQUIRED_FIELDS = [:product, :component, :summary, :version, :description, :op_sys, :platform, :priority, :severity]
 
       def fields(params={})
-        rpc_call( params.merge(rpc_method: "fields"))
+        rpc_call( :fields, params )
       end
 
       # Returns all comments associated with a Bug
@@ -26,7 +26,7 @@ module Rodzilla
       # Valid values:
       # product, url, id, alias, limit
       def search(query={})
-        rpc_call( query.merge(rpc_method: 'search') )
+        rpc_call( :search, query )
       end
 
       # see: http://www.bugzilla.org/docs/tip/en/html/api/Bugzilla/WebService/Bug.html#create

@@ -15,16 +15,11 @@ module Rodzilla
           Bugzilla_login: @username,
           Bugzilla_password: @password
         }
-
-        setup_request
       end
 
       def send_request!(rpc_method, params={}, http_method=:post)
-
-        rpc_request.method = rpc_method
-
-        # always merge in params so we keep the credentials
-        rpc_request.params = rpc_request.params.merge(params)
+        setup_request
+        setup_request_data(rpc_method, params)
 
         case http_method.to_s.downcase
         when 'post'
@@ -41,10 +36,14 @@ module Rodzilla
         @http_response = self.class.post( @url, body: rpc_request.serialize, headers: rpc_request.headers )
         parse_http_response
         raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
+        rpc_response
       end
 
       def get_request
         @http_response = self.class.post(@url, body: rpc_request.serialize, headers: rpc_request.headers )
+        parse_http_response
+        raise Rodzilla::JsonRpc::InvalidResponseId unless check_cycle_id
+        rpc_response
       end
 
 
@@ -58,11 +57,15 @@ module Rodzilla
         # Return 
         def setup_request
           user_auth = @credentials
-          @json_rpc_request = Rodzilla::JsonRpc::Request.new do |request|
+          @rpc_request = Rodzilla::JsonRpc::Request.new do |request|
             request.headers = { 'Content-Type' => 'application/json-rpc' }
-            request.params = user_auth
             request.id = generate_cycle_id
           end
+        end
+
+        def setup_request_data(rpc_method, params={})
+          @rpc_request.method = rpc_method
+          @rpc_request.params = @credentials.merge(params)
         end
 
         def generate_cycle_id; Random.rand(1..20); end

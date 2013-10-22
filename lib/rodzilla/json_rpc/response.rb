@@ -4,11 +4,12 @@ module Rodzilla
       attr_accessor :result, :error, :id
 
       
-      # 
-      # 
       def read_http_response(http_response)
-        body = http_response.parsed_response
-        raise body.inspect
+        http_response.parsed_response.tap do |body|
+          id     = body["id"]
+          error  = body["error"]
+          result = body["result"]
+        end
       end
       
     end

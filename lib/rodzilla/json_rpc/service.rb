@@ -72,7 +72,8 @@ module Rodzilla
           @rpc_request.params = @credentials.merge(params)
         end
 
-        def generate_cycle_id; Random.rand(1..20); end
+        # TODO: Consider replacing with Random.rand(1..N) for increased security
+        def generate_cycle_id; 1; end
 
         def check_cycle_id
           return false if rpc_request.id != rpc_response.id

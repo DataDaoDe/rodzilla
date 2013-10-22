@@ -1,7 +1,7 @@
 module Rodzilla
   class WebService
 
-    attr_accessor :base_url, :username, :password, :format, :resource
+    attr_accessor :base_url, :format, :resource
 
     # base_url - The String full uri of the Bugzilla api server
     # username - The String containing the bugzilla authorized users username

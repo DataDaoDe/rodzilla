@@ -9,8 +9,8 @@ describe Rodzilla::WebService do
   describe "Constructor" do
     it "should accept 4 parameters: base_url, username, password, and format" do
       s = Rodzilla::WebService.new('http://example.io', 'uname', 'passwd', :json)
-      s.username.must_equal('uname')
-      s.password.must_equal('passwd')
+      s.instance_variable_get(:@username).must_equal('uname')
+      s.instance_variable_get(:@password).must_equal('passwd')
       s.base_url.must_equal('http://example.io')
       s.format.must_equal(:json)
     end
@@ -25,6 +25,25 @@ describe Rodzilla::WebService do
       s = Rodzilla::WebService.new('http://example.io', 'uname', 'passwd')
       s.format.must_equal(:json)
     end
+  end
+
+  describe "Attributes" do
+
+    it "should have attr_accessor for base_url" do
+      @service.must_respond_to(:base_url)
+      @service.must_respond_to(:base_url=)
+    end
+    
+    it "should have attr_accessor for format" do
+      @service.must_respond_to(:format)
+      @service.must_respond_to(:format=)
+    end
+
+    it "should have attr_accessor for resource" do
+      @service.must_respond_to(:resource)
+      @service.must_respond_to(:resource=)
+    end
+
   end
 
   describe "Resources" do

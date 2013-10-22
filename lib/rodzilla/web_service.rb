@@ -58,7 +58,7 @@ module Rodzilla
 
     def bugzilla_resource(resource)
       raise Rodzilla::Error::ResourceNotFoundError, "Error: Rodzilla::Resource::#{resource} does not exist." unless Rodzilla::Resource.constants.include?(resource.to_sym)
-      @service = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
+      @resource = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
     end
 
     protected :bugzilla_resource

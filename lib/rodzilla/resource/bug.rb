@@ -3,15 +3,15 @@ module Rodzilla
     class Bug < Base
 
       def fields(params={})
-        rpc_call( 'Bug.fields', params )
+        rpc_call :fields, params
       end
 
       def search(params={})
-        rpc_call( 'Bug.search', params )
+        rpc_call :search, params
       end
 
-      def create!(params={})
-        rpc_call( 'Bug.create', params )
+      def create(params={})
+        rpc_call :create, params
       end
 
     end

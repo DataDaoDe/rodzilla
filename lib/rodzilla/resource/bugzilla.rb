@@ -3,19 +3,19 @@ module Rodzilla
     class Bugzilla < Base
 
       def version
-        rpc_call( rpc_method: 'version' )
+        rpc_call :version
       end
 
       def time
-        rpc_call( rpc_method: 'time' )
+        rpc_call :time
       end
 
       def timezone
-        rpc_call( rpc_method: 'timezone' )
+        rpc_call :timezone
       end
 
       def extensions
-        rpc_call( rpc_method: 'extensions' )
+        rpc_call :extensions
       end
 
     end

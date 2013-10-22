@@ -12,20 +12,25 @@ module Rodzilla
         setup_service
       end
 
-      def rpc_call(rpc_method=nil, params={}, http_method=:post)
+      def rpc_call(rpc_method_name, params={}, http_method=:post)
+        rpc_method = [Rodzilla::Util.demodulize(self.class), rpc_method_name.to_s].join('.')
         service.send_request!(rpc_method, params, http_method)
       end
 
       protected
         def setup_service
-          case @format.to_s.downcase
-          when "json"
+          case @format
+          when :json
+            @endpoint_url = set_endpoint_url(:json)
             @service  = Rodzilla::JsonRpc::Service.new(endpoint_url, @username, @password)
           end
         end
 
-        def endpoint_url
-          File.join(@base_url, 'jsonrpc.cgi')
+        def set_endpoint_url(type=nil)
+          case type
+          when :json
+            File.join(@base_url, 'jsonrpc.cgi')
+          end
         end
 
     end

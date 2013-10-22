@@ -7,7 +7,7 @@ module Rodzilla
         yield(self) if block_given?
       end
 
-      def request_object
+      def get_request_object
         {
           id: @id,
           method: @method,
@@ -15,8 +15,8 @@ module Rodzilla
         }
       end
 
-      def as_json
-        JSON.dump(request_object)
+      def serialize
+        JSON.dump(get_request_object)
       end
 
     end

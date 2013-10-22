@@ -11,7 +11,7 @@ module Rodzilla
         {
           id: @id,
           method: @method,
-          params: @params
+          params: [@params]
         }
       end
 

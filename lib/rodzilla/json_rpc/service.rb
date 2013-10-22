@@ -61,7 +61,6 @@ module Rodzilla
         # 
         # Return 
         def setup_request
-          user_auth = @credentials
           @rpc_request = Rodzilla::JsonRpc::Request.new do |request|
             request.headers = { 'Content-Type' => 'application/json-rpc' }
             request.id = generate_cycle_id

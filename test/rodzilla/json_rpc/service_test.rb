@@ -2,6 +2,7 @@ require 'test_helper'
 
 describe Rodzilla::JsonRpc::Service do
   before do
+    def new_service; Rodzilla::JsonRpc::Service.new('http://bugzilla.test.com/jsonrpc.cgi', 'user', 'passwd'); end
     @service = Rodzilla::JsonRpc::Service.new('http://bugzilla.test.com/jsonrpc.cgi', 'user', 'passwd')
     stub_bugzilla_request('Bugzilla.version')
     @version_body = method_fixture('Bugzilla_version.json').read
@@ -30,6 +31,24 @@ describe Rodzilla::JsonRpc::Service do
     it "should return a JSON Hash for a successfull API call" do
       @service.send_request!('Bugzilla.version').must_be_kind_of(Hash)
     end
+  end
+
+  describe "setup request" do
+
+    it "should instantiate the request object" do
+      s = new_service
+      s.rpc_request = nil
+      s.send(:setup_request)
+      s.rpc_request.must_be_kind_of(Rodzilla::JsonRpc::Request)
+    end
+
+    it "should set the json-rpc header on request.headers object" do
+      s = new_service
+      s.rpc_request = nil
+      s.send(:setup_request)
+      s.rpc_request.headers.must_equal({ 'Content-Type' => 'application/json-rpc' })
+    end
+
   end
 
   describe "setup_request_data" do

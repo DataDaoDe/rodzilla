@@ -23,36 +23,38 @@ module Rodzilla
         setup_request
         setup_request_data(rpc_method, params)
 
-        case http_method.to_s.downcase
-        when 'post'
-          post_request
-        when 'get'
-          get_request
-        else
+        unless ["post","get"].include?(http_method.to_s.downcase)
           raise Rodzilla::JsonRpc::Error::UnsupportedHttpMethod, "Error: Only GET and POST request are supported HTTP methods."
         end
+
+        execute_request_and_response(http_method)
       end
 
-      def post_request
-        @http_response = self.class.post( @url, body: rpc_request.serialize, headers: rpc_request.headers )
-        
+      def execute_request_and_response(http_method)
+        raw_request(http_method)
         parse_http_response
-
         raise Rodzilla::JsonRpc::Error::InvalidResponseId unless check_cycle_id
         raise Rodzilla::JsonRpc::Error::ResponseError.new(@rpc_response.error["code"]), @rpc_response.error["message"] if @rpc_response.error
-        
         @rpc_response.result
       end
-
-      def get_request
-        @http_response = self.class.post(@url, body: rpc_request.serialize, headers: rpc_request.headers )
-        parse_http_response
-        raise Rodzilla::JsonRpc::Error::InvalidResponseId unless check_cycle_id
-        @rpc_response.result
-      end
-
 
       private
+
+        def raw_request(http_method)
+          begin
+            @http_response = self.class.send(http_method, @url, body: rpc_request.serialize, headers: rpc_request.headers )
+          rescue => ex
+            raise Rodzilla::JsonRpc::HttpError,  ex.message
+          end
+
+          case @http_response.code
+          when 400...500
+            raise Rodzilla::JsonRpc::Error::ClientError
+          when 500...600
+            raise Rodzilla::JsonRpc::Error::ServerError
+          end
+
+        end
 
         # Sets the Content-Type to application/json-rpc for the Service
         # also adds Bugzilla defined login/password to the request parameters

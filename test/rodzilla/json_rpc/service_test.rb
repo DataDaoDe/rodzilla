@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe Rodzilla::JsonRpc::Service do
   before do
-    def new_service; Rodzilla::JsonRpc::Service.new('http://bugzilla.test.com/jsonrpc.cgi', 'user', 'passwd'); end
+    def new_service;  Rodzilla::JsonRpc::Service.new('http://bugzilla.test.com/jsonrpc.cgi', 'user', 'passwd'); end
     @service = Rodzilla::JsonRpc::Service.new('http://bugzilla.test.com/jsonrpc.cgi', 'user', 'passwd')
     stub_bugzilla_request('Bugzilla.version')
     @version_body = method_fixture('Bugzilla_version.json').read
@@ -14,18 +14,15 @@ describe Rodzilla::JsonRpc::Service do
 
   it "must set Bugzilla_login and Bugzilla_password on initialize" do
     s = new_service
-    s.internal_variable_get(:@credentials).wont_be_nil
+    s.instance_variable_get(:@credentials).wont_be_nil
     s.credentials.must_equal({ Bugzilla_login: "user", Bugzilla_password: "passwd" })
   end
 
-  describe "post request should raise a ResponseError if error is not nil" do
-    s = new_service
-    lambda { s.post_request }.must_raise(Rodzilla::JsonRpc::Error::ResponseError)
-  end
-
-  describe "post_request should return the Response#result" do
-    s = new_service
-    s.post_request.must_be_kind_of(Rodzilla::JsonRpc::Response)
+  it "execute_request_and_response should return the Response#result" do
+    s = Rodzilla::JsonRpc::Service.new('http://bugzilla.test.com/jsonrpc.cgi', 'user', 'passwd')
+    res = s.execute_request_and_response(:post)
+    res.must_be_kind_of(Hash)
+    res.must_equal(s.rpc_response.result)
   end
 
   describe "cycle_id checks" do

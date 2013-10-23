@@ -1,6 +1,7 @@
-require "helper"
+require "test_helper"
 
 describe Rodzilla::JsonRpc::Response do
+  
   before do
     def new_response; Rodzilla::JsonRpc::Response.new; end
     @response = Rodzilla::JsonRpc::Response.new
@@ -34,8 +35,8 @@ describe Rodzilla::JsonRpc::Response do
     end
 
     it "should have methods result & result=" do
-      @result.must_respond_to(:result)
-      @result.must_respond_to(:result=)
+      @response.must_respond_to(:result)
+      @response.must_respond_to(:result=)
     end
   end
 end

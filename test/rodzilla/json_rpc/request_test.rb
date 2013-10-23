@@ -3,7 +3,9 @@ require "test_helper"
 describe Rodzilla::JsonRpc::Request do
   before do
     @request = Rodzilla::JsonRpc::Request.new
-    def new_breq(&block); Rodzilla::JsonRpc::Request.new(&block); end
+    def new_breq(&block)
+      Rodzilla::JsonRpc::Request.new(&block)
+    end
   end
 
   it "should yield itself if a block is given on initialize" do
@@ -16,8 +18,21 @@ describe Rodzilla::JsonRpc::Request do
   end
 
   it "get_request_object should return a hash with id, method, and params" do
-    r = new_breq { |req| req.id = 5; req.method = "Test.remote" }
-    r.get_request_object.must_equal({ id: 5, method: "Test.remote", params: nil }
+    r = new_breq do |req|
+      req.id = 5
+      req.method = 'Test'
+      req.params = { name: 'nada' }
+    end
+    
+    obj = r.get_request_object
+    obj.must_be_kind_of(Hash)
+
+    obj.keys.must_include(:id)
+    obj.keys.must_include(:method)
+    obj.keys.must_include(:params)
+
+    obj[:params].must_be_kind_of(Array)
+
   end
 
   it "serialize should a valid JSON String" do
@@ -45,7 +60,6 @@ describe Rodzilla::JsonRpc::Request do
       @request.must_respond_to(:headers)
       @request.must_respond_to(:headers=)
     end
-
   end
 
 end

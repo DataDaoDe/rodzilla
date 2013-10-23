@@ -112,7 +112,6 @@ module Rodzilla
       # priority (string) Defaulted - What order the bug will be fixed in by the developer, compared to the developer's other bugs.
       # severity (string) Defaulted - How severe the bug is.
       def create!(params={})
-
         raise ArgumentError, "Error: product, component, summary, version are required args" unless check_params([:product, :component, :summary, :version], params)
         rpc_call :create, params
       end

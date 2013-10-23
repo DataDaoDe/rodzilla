@@ -35,9 +35,9 @@ module Rodzilla
 
         def check_params(required=[], actual)
           if actual.is_a?(Hash)
-            (required - actual.keys) == 0
+            (required - actual.keys).length == 0
           else
-            (required - actual) == 0
+            (required - actual).length == 0
           end
         end
 

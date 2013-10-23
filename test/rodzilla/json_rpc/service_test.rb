@@ -12,6 +12,22 @@ describe Rodzilla::JsonRpc::Service do
     @service.class.ancestors.must_include(HTTParty)
   end
 
+  it "must set Bugzilla_login and Bugzilla_password on initialize" do
+    s = new_service
+    s.internal_variable_get(:@credentials).wont_be_nil
+    s.credentials.must_equal({ Bugzilla_login: "user", Bugzilla_password: "passwd" })
+  end
+
+  describe "post request should raise a ResponseError if error is not nil" do
+    s = new_service
+    lambda { s.post_request }.must_raise(Rodzilla::JsonRpc::Error::ResponseError)
+  end
+
+  describe "post_request should return the Response#result" do
+    s = new_service
+    s.post_request.must_be_kind_of(Rodzilla::JsonRpc::Response)
+  end
+
   describe "cycle_id checks" do
     
     it "generate_cycle_id should return 1" do

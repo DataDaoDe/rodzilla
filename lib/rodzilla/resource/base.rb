@@ -9,7 +9,7 @@ module Rodzilla
         @password = password
         @format = format
 
-        setup_service
+        setup_service(format)
       end
 
       def rpc_call(rpc_method_name, params={}, http_method=:post)
@@ -18,16 +18,16 @@ module Rodzilla
       end
 
       protected
-        def setup_service
-          case @format
+        def setup_service(format)
+          case format
           when :json
             @endpoint_url = set_endpoint_url(:json)
             @service  = Rodzilla::JsonRpc::Service.new(@endpoint_url, @username, @password)
           end
         end
 
-        def set_endpoint_url(type=nil)
-          case type
+        def set_endpoint_url(format)
+          case format
           when :json
             File.join(@base_url, 'jsonrpc.cgi')
           end

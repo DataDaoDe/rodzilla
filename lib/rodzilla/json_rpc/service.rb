@@ -44,7 +44,7 @@ module Rodzilla
           begin
             @http_response = self.class.send(http_method, @url, body: rpc_request.serialize, headers: rpc_request.headers )
           rescue => ex
-            raise Rodzilla::JsonRpc::HttpError,  ex.message
+            raise Rodzilla::JsonRpc::Error::HttpError,  ex.message
           end
 
           case @http_response.code

@@ -33,6 +33,14 @@ module Rodzilla
           end
         end
 
+        def check_params(required=[], actual)
+          if actual.is_a?(Hash)
+            (required - actual.keys) == 0
+          else
+            (required - actual) == 0
+          end
+        end
+
     end
   end
 end

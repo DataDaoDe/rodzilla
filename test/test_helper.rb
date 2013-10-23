@@ -21,6 +21,7 @@ end
 # ========================
 # Stubs
 # ========================
+
 class StubSettings
   URL = 'http://bugzilla.test.com'
   USERNAME = 'bugzilla'
@@ -38,6 +39,10 @@ class StubSettings
     "Content-Type"            => "application/json; charset=UTF-8"
   }
 
+end
+
+def new_resource(resource)
+  Object.module_eval("Rodzilla::Resource::#{resource}").new(StubSettings::URL, StubSettings::USERNAME, StubSettings::PASSWORD)
 end
 
 def stub_bugzilla_request(rpc_name, type=:methods, http_method=:post)

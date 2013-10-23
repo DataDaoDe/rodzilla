@@ -4,6 +4,7 @@ gem "rake"
 
 group :test do
   gem "minitest"
+  gem "mocha"
   gem "simplecov", :require => false
   gem "webmock"
 end

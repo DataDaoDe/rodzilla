@@ -4,6 +4,7 @@ require "test_helper"
 describe Rodzilla::Resource::Base do
   before do
     @base_service = Rodzilla::Resource::Base.new(StubSettings::URL, StubSettings::USERNAME, StubSettings::PASSWORD)
+    def new_mock; MiniTest::Mock.new; end
   end
 
   it "attribute accessors" do
@@ -31,6 +32,22 @@ describe Rodzilla::Resource::Base do
       @base_service.send(:setup_service, :json)
       @base_service.instance_variable_get(:@endpoint_url).must_equal(@base_service.base_url + '/jsonrpc.cgi' )
       @base_service.service.must_be_kind_of(Rodzilla::JsonRpc::Service)
+    end
+  end
+
+  describe "rpc_call" do
+    it "should require at least one argument - rpc_method_name" do
+      lambda { @base_service.send(:rpc_call) }.must_raise(ArgumentError)
+    end
+  end
+
+  describe "get_resource_rpc_method_name" do
+    it "should require at least one argument - rpc_method_name" do
+      lambda { @base_service.send(:get_resource_rpc_method_name) }.must_raise(ArgumentError)
+    end
+
+    it "should return a String as Resource.method_name" do
+      @base_service.send(:get_resource_rpc_method_name, 'hello').must_equal('Base.hello')
     end
   end
 

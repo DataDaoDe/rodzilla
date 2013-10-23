@@ -13,11 +13,15 @@ module Rodzilla
       end
 
       def rpc_call(rpc_method_name, params={}, http_method=:post)
-        rpc_method = [Rodzilla::Util.demodulize(self.class), rpc_method_name.to_s].join('.')
-        service.send_request!(rpc_method, params, http_method)
+        service.send_request!( get_resource_rpc_method_name(rpc_method_name), params, http_method)
       end
 
       protected
+      
+        def get_resource_rpc_method_name(rpc_method_name)
+          [Rodzilla::Util.demodulize(self.class), rpc_method_name.to_s].join('.')
+        end
+
         def setup_service(format)
           case format
           when :json

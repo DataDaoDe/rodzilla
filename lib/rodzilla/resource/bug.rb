@@ -7,11 +7,44 @@ module Rodzilla
       # ids (array) - An array of integer field ids.
       # names (array) - An array of strings representing field names.
       # 
+      # Support: >= 3.6
+      # 
       # If neither ids nor names is specified, then all non-obsolete fields will be returned.
       def fields(params={})
         rpc_call :fields, params
       end
 
+      # Allows you to search for bugs based on particular criteria.
+      # 
+      # Unless otherwise specified in the description of a parameter,
+      # bugs are returned if they match exactly the criteria you specify in these parameters.
+      # That is, we don't match against substrings--if a bug is in the "Widgets" product and you ask for bugs in the "Widg" product, you won't get anything.
+      # 
+      # Criteria are joined in a logical AND
+      # 
+      # alias         - string The unique alias for this bug.
+      # assigned_to   - string The login name of a user that a bug is assigned to.
+      # component     - string The name of the Component that the bug is in. Note that if there are multiple Components with the same name, and you search for that name, bugs in all those Components will be returned. If you don't want this, be sure to also specify the product argument.
+      # creation_time - dateTime Searches for bugs that were created at this time or later. May not be an array.
+      # creator       - string The login name of the user who created the bug.
+      # id            - int The numeric id of the bug.
+      # last_change_time - dateTime Searches for bugs that were modified at this time or later. May not be an array.
+      # limit         - int Limit the number of results returned to int records. If the limit is more than zero and higher than the maximum limit set by the administrator, then the maximum limit will be used instead. If you set the limit equal to zero, then all matching results will be returned instead.
+      # offset - int Used in conjunction with the limit argument, offset defines the starting position for the search. For example, given a search that would return 100 bugs, setting limit to 10 and offset to 10 would return bugs 11 through 20 from the set of 100.
+      # op_sys - string The "Operating System" field of a bug.
+      # platform -string The Platform (sometimes called "Hardware") field of a bug.
+      # priority  - string The Priority field on a bug.
+      # product - string The name of the Product that the bug is in.
+      # resolution - string The current resolution--only set if a bug is closed. You can find open bugs by searching for bugs with an empty resolution.
+      # severity - string The Severity field on a bug.
+      # status - string The current status of a bug (not including its resolution, if it has one, which is a separate field above).
+      # summary - string Searches for substrings in the single-line Summary field on bugs. If you specify an array, then bugs whose summaries match any of the passed substrings will be returned.
+      # target_milestone - string The Target Milestone field of a bug. Note that even if this Bugzilla does not have the Target Milestone field enabled, you can still search for bugs by Target Milestone. However, it is likely that in that case, most bugs will not have a Target Milestone set (it defaults to "---" when the field isn't enabled).
+      # qa_contact - string The login name of the bug's QA Contact. Note that even if this Bugzilla does not have the QA Contact field enabled, you can still search for bugs by QA Contact (though it is likely that no bug will have a QA Contact set, if the field is disabled).
+      # url - string The "URL" field of a bug.
+      # version
+      # 
+      # All params can be either the type or an array of the types
       def search(params={})
         rpc_call :search, params
       end

@@ -23,6 +23,8 @@ end
 # ========================
 class StubSettings
   URL = 'http://bugzilla.test.com'
+  USERNAME = 'bugzilla'
+  PASSWORD = 'bugzilla'
 
   JSON_URL = URL + '/jsonrpc.cgi'
   JSON_HEADERS = {

@@ -7,6 +7,7 @@ describe Rodzilla::Util do
     it "should have a module method demodulize" do
       Rodzilla::Util.must_respond_to(:demodulize)
     end
+    
   end
 
   describe "demodulize" do

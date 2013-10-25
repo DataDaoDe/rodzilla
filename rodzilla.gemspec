@@ -13,8 +13,10 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/jwaterfaucett/rodzilla"
   spec.license       = "MIT"
 
-  spec.signing_key   = '/Users/john/.gemcert/gem-private_key.pem'
-  spec.cert_chain    = ['gem-public_cert.pem']
+  unless ENV['TRAVIS']
+    spec.signing_key   = '/Users/john/.gemcert/gem-private_key.pem'
+    spec.cert_chain    = ['gem-public_cert.pem']
+  end
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

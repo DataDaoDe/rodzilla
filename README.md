@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jwaterfaucett/rodzilla.png)](https://travis-ci.org/jwaterfaucett/rodzilla)
+
 # Rodzilla
 
 This Ruby Gem tries its best to implement: [http://www.bugzilla.org/docs/tip/en/html/api/index.html](The Bugzilla API)

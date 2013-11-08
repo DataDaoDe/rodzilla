@@ -16,6 +16,12 @@ module Rodzilla
         service.send_request!( get_resource_rpc_method_name(rpc_method_name), params, http_method)
       end
 
+      # Makes a GET request to the service endpoint and checks if the 
+      # return status is 200
+      def raw_http_request(http_method, url, options={})
+        @service.send_raw_request(http_method, url, options)
+      end
+
       protected
       
         def get_resource_rpc_method_name(rpc_method_name)

@@ -18,6 +18,10 @@ module Rodzilla
         }
         setup_request
       end
+        
+      def send_raw_request(http_method, url, options={})
+        http_response = self.class.send(http_method, url, options )
+      end
 
       def send_request!(rpc_method, params={}, http_method=:post)
         setup_request

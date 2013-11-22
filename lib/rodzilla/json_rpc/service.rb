@@ -17,6 +17,8 @@ module Rodzilla
           Bugzilla_password: @password
         }
         setup_request
+
+        yield(self) if block_given?
       end
         
       def send_raw_request(http_method, url, options={})

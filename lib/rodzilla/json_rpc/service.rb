@@ -6,10 +6,11 @@ module Rodzilla
       include HTTParty
 
       attr_accessor :rpc_request, :rpc_response,
-                    :username, :password, :credentials, :url
+                    :username, :password, :credentials, :url, :options
 
       def initialize(url, username, password)
         @url = url
+        @options = {}
         @username = username
         @password = password
         @credentials = {
@@ -17,10 +18,8 @@ module Rodzilla
           Bugzilla_password: @password
         }
         setup_request
-
-        yield(self) if block_given?
       end
-        
+      
       def send_raw_request(http_method, url, options={})
         http_response = self.class.send(http_method, url, options )
       end
@@ -48,7 +47,8 @@ module Rodzilla
 
         def raw_request(http_method)
           begin
-            @http_response = self.class.send(http_method, @url, body: rpc_request.serialize, headers: rpc_request.headers )
+            request_fields = @options.merge( body: rpc_request.serialize, headers: rpc_request.headers )
+            @http_response = self.class.send(http_method, @url, request_fields )
           rescue => ex
             raise Rodzilla::JsonRpc::Error::HttpError,  ex.message
           end

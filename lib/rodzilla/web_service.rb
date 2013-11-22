@@ -1,17 +1,18 @@
 module Rodzilla
   class WebService
 
-    attr_accessor :base_url, :format, :resource
+    attr_accessor :base_url, :format, :resource, :options
 
     # base_url - The String full uri of the Bugzilla api server
     # username - The String containing the bugzilla authorized users username
     # password - The String containing the bugzilla authorized users password
     # format - The request/response format which defaults to :json
-    def initialize(base_url, username, password, format=:json)
+    def initialize(base_url, username, password, format=:json, options={})
       @base_url     = base_url
       @username     = username
       @password     = password
       @format       = format
+      @options      = options || {}
     end
 
     # Provide a shortcut for instantiation Bug objects
@@ -59,6 +60,8 @@ module Rodzilla
     def bugzilla_resource(resource)
       raise Rodzilla::Error::ResourceNotFoundError, "Error: Rodzilla::Resource::#{resource} does not exist." unless Rodzilla::Resource.constants.include?(resource.to_sym)
       @resource = Object.module_eval("Rodzilla::Resource::#{resource}").new(@base_url, @username, @password, @format)
+      @resource.service.options = self.options if self.options
+      @resource
     end
 
     protected :bugzilla_resource

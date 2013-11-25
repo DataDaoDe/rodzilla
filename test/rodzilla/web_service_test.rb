@@ -25,6 +25,7 @@ describe Rodzilla::WebService do
       s = Rodzilla::WebService.new('http://example.io', 'uname', 'passwd')
       s.format.must_equal(:json)
     end
+
   end
 
   describe "Attributes" do
@@ -42,6 +43,22 @@ describe Rodzilla::WebService do
     it "should have attr_accessor for resource" do
       @service.must_respond_to(:resource)
       @service.must_respond_to(:resource=)
+    end
+
+    it "should have attr_accessor for options" do
+      @service.must_respond_to(:options)
+      @service.must_respond_to(:options=)
+    end
+
+  end
+
+  describe "options" do
+
+    it "should set options on the backend service provider" do
+      opts = { ssl_version: :SSLv2 }
+      @service.options[:ssl_version] = opts[:ssl_version]
+      resource = @service.bugzilla
+      resource.service.options.must_equal( opts )
     end
 
   end

@@ -5,6 +5,6 @@ rvm:
   - ruby-head
   - jruby-19mode
   - jruby-head
-script: rake $TASK
+script: bundle exec rake $TASK
 env:
   - TASK=test

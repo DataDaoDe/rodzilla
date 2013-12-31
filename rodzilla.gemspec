@@ -13,11 +13,6 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/jwaterfaucett/rodzilla"
   spec.license       = "MIT"
 
-  unless ENV['TRAVIS']
-    spec.signing_key   = '/Users/john/.gemcert/gem-private_key.pem'
-    spec.cert_chain    = ['gem-public_cert.pem']
-  end
-
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
@@ -26,4 +21,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty"
 
   spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "mocha"
+  spec.add_development_dependency "webmock"
+  spec.add_development_dependency "minitest"
+
 end
